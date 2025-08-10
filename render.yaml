@@ -28,4 +28,3 @@ services:
 databases:
   - name: todo-postgres
     databaseName: todoapp
-    user: postgres
