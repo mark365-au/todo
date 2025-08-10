@@ -11,6 +11,15 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Debug logging
+  useEffect(() => {
+    console.log('Environment Variables:', {
+      VITE_API_URL: import.meta.env.VITE_API_URL,
+      API_URL: API_URL,
+      allEnvVars: import.meta.env
+    });
+  }, []);
+
   useEffect(() => {
     fetchTodos();
   }, []);
