@@ -1,0 +1,45 @@
+# Production Frontend Dockerfile for Render
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY frontend/package*.json ./
+
+# Install dependencies
+RUN npm ci && npm cache clean --force
+
+# Copy source code
+COPY frontend/ .
+
+# Build the application
+RUN npm run build
+
+# Production stage
+FROM nginx:alpine
+
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copy custom nginx configuration
+COPY nginx.render.conf /etc/nginx/conf.d/default.conf
+
+# Copy built files
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Create non-root user
+RUN adduser -D -s /bin/sh nginx-user
+
+# Change ownership
+RUN chown -R nginx-user:nginx-user /usr/share/nginx/html
+RUN chown -R nginx-user:nginx-user /var/cache/nginx
+RUN chown -R nginx-user:nginx-user /var/run
+
+# Use non-root user
+USER nginx-user
+
+# Expose port
+EXPOSE 3000
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
