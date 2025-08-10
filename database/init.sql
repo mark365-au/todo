@@ -1,5 +1,5 @@
 -- Initialize the todo database
-CREATE DATABASE IF NOT EXISTS todoapp;
+-- Note: Database is already created by environment variables
 
 -- Use the database
 \c todoapp;

@@ -25,8 +25,8 @@ services:
   # Backend API
   backend:
     build:
-      context: ./backend
-      dockerfile: ../Dockerfile.backend
+      context: .
+      dockerfile: Dockerfile.backend
     container_name: todo-backend
     environment:
       DATABASE_URL: postgresql://postgres:password@postgres:5432/todoapp
@@ -47,8 +47,8 @@ services:
   # Frontend
   frontend:
     build:
-      context: ./frontend
-      dockerfile: ../Dockerfile.frontend
+      context: .
+      dockerfile: Dockerfile.frontend
     container_name: todo-frontend
     environment:
       VITE_API_URL: http://localhost:5000/api
