@@ -3,7 +3,8 @@ import axios from 'axios';
 import './App.css';
 
 // Force rebuild for environment variable update - v2
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Hardcoded production URL to avoid environment variable issues
+const API_URL = 'https://todo-backend-zih3.onrender.com/api';
 
 function App() {
   const [todos, setTodos] = useState([]);
